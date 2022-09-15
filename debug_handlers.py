@@ -27,7 +27,7 @@ app = Flask(__name__)
 
 # -BEGIN CUSTOM HANDLERS
 
-def _init():#new
+def _init_on_start():#new on_start
     db.generate_mapping(create_tables=True)
 
 def _sample1_on_create(hashMap, _files=None, _data=None):
@@ -156,5 +156,5 @@ class hashMap:
 
 
 if __name__ == '__main__':
-    _init()#new
+    _init_on_start()#new
     app.run(host='0.0.0.0', port=2075, debug=True)

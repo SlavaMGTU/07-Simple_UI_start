@@ -199,7 +199,7 @@
         "PyTimerTask": [
             {
                 "PyTimerTaskKey": "on_start",
-                "PyTimerTaskDef": "init_on_start",
+                "PyTimerTaskDef": "_init_on_start",
                 "PyTimerTaskPeriod": "-1",
                 "PyTimerTaskBuilIn": false
             }
