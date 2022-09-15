@@ -7,15 +7,19 @@ from typing import Optional
 
 
 # Constants and variables
-DB_PATH = 'db.db'#'db\\db.db'
+DB_PATH ='//data/data/ru.travelfood.simple_ui/databases/SimpleWMS'#new DB_PATH = 'db.db'#'db\\db.db'
 #DB_PATH = 'sqlite_dev.db'
 db = Database()
+db.bind(provider='sqlite', filename=DB_PATH, create_db=True)#new
 
 
 class Record(db.Entity):
     barcode = Required(str)
     name = Required(str)
     qty = Required(int)
+
+def init():#new
+    db.generate_mapping(create_tables=True)
 
 def setup_db(hash_map: Optional['hashMap'] = None,
              db_path: str = DB_PATH,
@@ -33,7 +37,7 @@ def setup_db(hash_map: Optional['hashMap'] = None,
 
     db.bind(provider='sqlite', filename=db_path, create_db=True)
     db.generate_mapping(create_tables=True)
-
+#
 #
 # def add_table_entries(data: dict) -> None:
 #     '''
@@ -51,5 +55,5 @@ def setup_db(hash_map: Optional['hashMap'] = None,
 #                 table(**record_data)
 
 
-if __name__ == '__main__':
-    setup_db()
+#if __name__ == '__main__':#new
+#    setup_db()

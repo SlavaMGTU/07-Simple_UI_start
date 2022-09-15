@@ -1,17 +1,34 @@
-import pony as pony
+from pony.orm.core import db_session
+from pony import orm
+from pony.orm import Database,Required,Set,select,commit
 from flask import Flask
 from flask import request
 import json
 
+
 from pony.orm import select, db_session, commit
 
-import ui_global
+#import ui_global
+
+
+DB_PATH ='db.db'  #'db\\db.db'#new
+#DB_PATH = 'sqlite_dev.db'
+db = Database()#new
+
+db.bind(provider='sqlite', filename=DB_PATH, create_db=True)#new
+
+class Record(db.Entity):#new
+    barcode = Required(str)
+    name = Required(str)
+    qty = Required(int)
 
 app = Flask(__name__)
 
 
 # -BEGIN CUSTOM HANDLERS
 
+def _init():#new
+    db.generate_mapping(create_tables=True)
 
 def _sample1_on_create(hashMap, _files=None, _data=None):
     if not hashMap.containsKey('a'):
@@ -28,9 +45,9 @@ def _sample1_on_input(hashMap, _files=None, _data=None):
     return hashMap
 
 
-def _init_on_start(hashMap, _files=None, _data=None):
-    ui_global.setup_db()
-    return hashMap
+#def _init_on_start(hashMap, _files=None, _data=None):
+#   ui_global.setup_db()
+#   return hashMap
 
 
 def _barcode_on_start(hashMap, _files=None, _data=None):
@@ -57,10 +74,12 @@ def _barcode_on_start(hashMap, _files=None, _data=None):
         ]
     }
     # work with SQL via Pony ORM
-    query = select(c for c in ui_global.Record)#https://stackoverflow.com/questions/16115713/how-pony-orm-does-its-tricks
-    rows = []
-    for record in query:
-        rows.append({'barcode': record.barcode, 'name': record.name, 'qty': record.qty})
+    with db_session:#new
+        query = select(c for c in Record)#https://stackoverflow.com/questions/16115713/how-pony-orm-does-its-tricks
+    #query = select(c for c in ui_global.Record)#https://stackoverflow.com/questions/16115713/how-pony-orm-does-its-tricks
+        rows = []
+        for record in query:
+            rows.append({'barcode': record.barcode, 'name': record.name, 'qty': record.qty})
 
     table['rows'] = rows
     hashMap.put('table', json.dumps(table))
@@ -79,7 +98,8 @@ def _barcode_on_input(hashMap, _files=None, _data=None):
 
 def _input_qty(hashMap, _files=None, _data=None):
     with db_session:
-        p = ui_global.Record(barcode=hashMap.get('barcode'), name=hashMap.get('nom'), qty=int(hashMap.get('qty')))
+        #p = ui_global.Record(barcode=hashMap.get('barcode'), name=hashMap.get('nom'), qty=int(hashMap.get('qty')))
+        p = Record(barcode=hashMap.get('barcode'), name=hashMap.get('nom'), qty=int(hashMap.get('qty')))#new
         commit()
 
     hashMap.put('ShowScreen', 'Input-qty')
@@ -96,7 +116,8 @@ def set_input(method):
     f = globals()[func]
     hashMap.d = jdata['hashmap']
     #f()
-    f('hashmap')
+    #f('hashmap')
+    f(hashMap)#new
     jdata['hashmap'] = hashMap.export()
     jdata['stop'] = False
     jdata['ErrorMessage'] = ''
@@ -135,4 +156,5 @@ class hashMap:
 
 
 if __name__ == '__main__':
+    _init()#new
     app.run(host='0.0.0.0', port=2075, debug=True)
