@@ -74,10 +74,11 @@ def _barcode_on_start(hashMap, _files=None, _data=None):
         ]
     }
     # work with SQL via Pony ORM
+    rows = []
     with db_session:#new
         query = select(c for c in Record)#https://stackoverflow.com/questions/16115713/how-pony-orm-does-its-tricks
     #query = select(c for c in ui_global.Record)#https://stackoverflow.com/questions/16115713/how-pony-orm-does-its-tricks
-        rows = []
+
         for record in query:
             rows.append({'barcode': record.barcode, 'name': record.name, 'qty': record.qty})
 
@@ -89,21 +90,22 @@ def _barcode_on_start(hashMap, _files=None, _data=None):
 
 def _barcode_on_input(hashMap, _files=None, _data=None):
 
-    if hashMap.get('listener') == 'barcode_input':
-        hashMap.get('barcode_input')
+    if hashMap.get('listener') == 'barcode':
+        #hashMap.get('barcode_input')
         hashMap.put('ShowScreen', 'Input-qty')
 
     return hashMap
 
 
 def _input_qty(hashMap, _files=None, _data=None):
-    with db_session:
-        #p = ui_global.Record(barcode=hashMap.get('barcode'), name=hashMap.get('nom'), qty=int(hashMap.get('qty')))
-        p = Record(barcode=hashMap.get('barcode'), name=hashMap.get('nom'), qty=int(hashMap.get('qty')))#new
-        commit()
+    if hashMap.get('listener') == 'btn_qty':
+        with db_session:
+            #p = ui_global.Record(barcode=hashMap.get('barcode'), name=hashMap.get('nom'), qty=int(hashMap.get('qty')))
+            p = Record(barcode=hashMap.get('barcode_input'), name=hashMap.get('nom'), qty=int(hashMap.get('qty')))#new
+            commit()
+            hashMap.put('ShowScreen', 'Scan-offline')
+            hashMap.put('toast', 'Добавлено')
 
-    hashMap.put('ShowScreen', 'Input-qty')
-    hashMap.put('toast', 'Добавлено')
     return hashMap
 
 

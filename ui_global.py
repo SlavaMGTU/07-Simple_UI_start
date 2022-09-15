@@ -8,7 +8,7 @@ from typing import Optional
 
 # Constants and variables
 #DB_PATH ='//data/data/ru.travelfood.simple_ui/databases/SimpleWMS'#new
-DB_PATH = 'db.db'#'db\\db.db'
+DB_PATH = 'db.db'#'db\\db.db
 #DB_PATH = 'sqlite_dev.db'
 db = Database()
 db.bind(provider='sqlite', filename=DB_PATH, create_db=True)#new
