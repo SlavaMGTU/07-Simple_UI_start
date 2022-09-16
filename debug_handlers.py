@@ -83,7 +83,7 @@ def _barcode_on_start(hashMap, _files=None, _data=None):
             rows.append({'barcode': record.barcode, 'name': record.name, 'qty': record.qty})
 
     table['rows'] = rows
-    hashMap.put('table', json.dumps(table))
+    hashMap.put('tab_scan', json.dumps(table))
 
     return hashMap
 
@@ -101,7 +101,7 @@ def _input_qty(hashMap, _files=None, _data=None):
     if hashMap.get('listener') == 'btn_qty':
         with db_session:
             #p = ui_global.Record(barcode=hashMap.get('barcode'), name=hashMap.get('nom'), qty=int(hashMap.get('qty')))
-            p = Record(barcode=hashMap.get('barcode_input'), name=hashMap.get('nom'), qty=int(hashMap.get('qty')))#new
+            p = Record(barcode=hashMap.get('barcode_input'), name='nom', qty=hashMap.get('qty'))#new
             commit()
             hashMap.put('ShowScreen', 'Scan-offline')
             hashMap.put('toast', 'Добавлено')

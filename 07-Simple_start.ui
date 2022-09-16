@@ -155,32 +155,32 @@
                                 "Variable": "",
                                 "type": "LinearLayout",
                                 "weight": "0",
-                                "height": "wrap_content",
-                                "width": "wrap_content",
+                                "height": "match_parent",
+                                "width": "match_parent",
                                 "orientation": "vertical",
                                 "Elements": [
                                     {
                                         "type": "TextView",
-                                        "height": "wrap_content",
-                                        "width": "wrap_content",
+                                        "height": "match_parent",
+                                        "width": "match_parent",
                                         "weight": "0",
                                         "Value": "Количество",
                                         "Variable": ""
                                     },
                                     {
                                         "type": "EditTextNumeric",
-                                        "height": "wrap_content",
-                                        "width": "wrap_content",
+                                        "height": "match_parent",
+                                        "width": "match_parent",
                                         "weight": "0",
-                                        "Value": "",
+                                        "Value": "@qty",
                                         "Variable": "qty"
                                     },
                                     {
                                         "type": "Button",
-                                        "height": "wrap_content",
-                                        "width": "wrap_content",
+                                        "height": "match_parent",
+                                        "width": "match_parent",
                                         "weight": "0",
-                                        "Value": "Ok",
+                                        "Value": "OK",
                                         "Variable": "btn_qty"
                                     }
                                 ]
