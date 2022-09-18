@@ -30,6 +30,10 @@ app = Flask(__name__)
 def _init_on_start():#new on_start
     db.generate_mapping(create_tables=True)
 
+# def _init_on_start(hashMap, _files=None, _data=None):
+#   ui_global.setup_db()
+#   return hashMap
+
 def _sample1_on_create(hashMap, _files=None, _data=None):
     if not hashMap.containsKey('a'):
         hashMap.put('a', '')
@@ -43,11 +47,6 @@ def _sample1_on_input(hashMap, _files=None, _data=None):
         sum = int(hashMap.get('a')) + int(hashMap.get('b'))
         hashMap.put('toast', str(int(hashMap.get('a')) + int(hashMap.get('b'))))
     return hashMap
-
-
-#def _init_on_start(hashMap, _files=None, _data=None):
-#   ui_global.setup_db()
-#   return hashMap
 
 
 def _barcode_on_start(hashMap, _files=None, _data=None):
@@ -101,7 +100,7 @@ def _input_qty(hashMap, _files=None, _data=None):
     if hashMap.get('listener') == 'btn_qty':
         with db_session:
             #p = ui_global.Record(barcode=hashMap.get('barcode'), name=hashMap.get('nom'), qty=int(hashMap.get('qty')))
-            p = Record(barcode=hashMap.get('barcode_input'), name='nom', qty=hashMap.get('qty'))#new
+            p = Record(barcode=hashMap.get('barcode_input'), name=hashMap.get('nom'), qty=hashMap.get('qty'))#new
             commit()
             hashMap.put('ShowScreen', 'Scan-offline')
             hashMap.put('toast', 'Добавлено')

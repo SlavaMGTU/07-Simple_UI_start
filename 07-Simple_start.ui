@@ -134,19 +134,20 @@
                         "onlineOnStart": false,
                         "onlineOnInput": false,
                         "DefOnInput": "_barcode_on_input",
-                        "DefOnCreate": "_barcode_on_start"
+                        "DefOnCreate": "_barcode_on_start",
+                        "DefOnlineOnCreate": ""
                     },
                     {
                         "Name": "Input-qty",
                         "type": "Operation",
                         "Elements": [
                             {
-                                "Value": "Ввод количества",
+                                "Value": "Ввод товара",
                                 "Variable": "",
                                 "type": "signature"
                             },
                             {
-                                "Value": "@nom",
+                                "Value": "Ввод количества товара",
                                 "Variable": "",
                                 "type": "signature"
                             },
@@ -159,6 +160,22 @@
                                 "width": "match_parent",
                                 "orientation": "vertical",
                                 "Elements": [
+                                    {
+                                        "type": "TextView",
+                                        "height": "match_parent",
+                                        "width": "match_parent",
+                                        "weight": "0",
+                                        "Value": "Название товара",
+                                        "Variable": ""
+                                    },
+                                    {
+                                        "type": "EditTextText",
+                                        "height": "match_parent",
+                                        "width": "match_parent",
+                                        "weight": "0",
+                                        "Value": "@nom",
+                                        "Variable": "nom"
+                                    },
                                     {
                                         "type": "TextView",
                                         "height": "match_parent",
